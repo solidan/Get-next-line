@@ -6,11 +6,11 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 10:22:51 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/01/09 11:24:41 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/01/09 13:27:52 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <get_next_line.h>
+# include "get_next_line.h"
 
 size_t	ft_strlen(char *str)
 {
@@ -50,4 +50,35 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		str1[i++] = s2[x];
 	str1[i] = '\0';
 	return (str1);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*memory;
+	size_t	i;
+
+	i = 0;
+	memory = malloc(count * size);
+	if (memory == NULL)
+		return (0);
+	while (i < count * size)
+	{
+		memory[i] = 0;
+		i++;
+	}
+	return (memory);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	*chr;
+
+	chr = (char *)s;
+	while (*chr != (const char)c)
+	{
+		if (!*chr)
+			return (NULL);
+		chr++;
+	}
+	return (chr);
 }
