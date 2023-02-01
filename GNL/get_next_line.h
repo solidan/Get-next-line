@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 10:22:48 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/01 11:48:53 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/01 13:12:16 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 size_t	ft_strlen(char *str);
 char	*ft_read(int fd);
 char	*ft_line(char	*s, int fd);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strdup(const char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *s, int c);
