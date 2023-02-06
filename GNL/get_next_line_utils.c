@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 10:22:51 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/01 12:41:57 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/06 10:44:38 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ size_t	ft_strlen(char *str)
 	size_t	c;
 
 	c = 0;
-	if(str == NULL)
+	if (str == NULL)
 	{
-		return(0);
+		return (0);
 	}
 	while (str[c] != '\0')
 		c++;
@@ -75,7 +75,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 
 {
 	char	*i;
