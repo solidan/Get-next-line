@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 11:58:41 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/01 12:10:59 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:36:20 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
    }
    // Print the data that was read
    printf("Read %ld bytes: %s\n", bytes_read, str);
+   printf("Read %ld bytes: %s\n", bytes_read, str);
  //long int
    // Close the file
    if (close(fd) == -1) 
@@ -103,8 +104,17 @@ int main(void)
    {
     return 1;
    }
-
 	char *line = get_next_line(fd);
+	printf("[%s]\n",line);
+	line = get_next_line(fd);
+	printf("[%s]\n",line);
+	line = get_next_line(fd);
+	printf("[%s]\n",line);
+	line = get_next_line(fd);
+	printf("[%s]\n",line);
+	line = get_next_line(fd);
+	printf("[%s]\n",line);
+	line = get_next_line(fd);
 	printf("[%s]\n",line);
 	return(0);
 }

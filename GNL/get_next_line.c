@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 10:22:43 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/06 12:16:47 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:59:57 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,38 +33,51 @@ char	*ft_read(int fd) //? lee y devuelve string
 	char	*buffer;
 	int		bytes_read;
 
-	buffer = malloc (BUFFER_SIZE + 1);
+	buffer = malloc(BUFFER_SIZE + 1);
 	//printf("[%p]\n", buffer);
-	if (!buffer)
+	if (buffer == NULL) //? esto se activa cuando malloc da error
 		return (NULL);
-	bytes_read = read (fd, buffer, BUFFER_SIZE);
-	if (bytes_read == -1)
+	//printf("malloc no tiene la culpa[%p]\n", buffer);
+	bytes_read = read(fd, buffer, BUFFER_SIZE); //? cuando fd falla, cuando el buffer no tiene suficiente espcio, BSes negativo, // devuelve el nº de bytes leidos
+	if (bytes_read < 0)
 	{
 		free (buffer);
 		return (NULL);
 	}
+	//printf("read no tiene la culpa\n");
 	buffer[bytes_read] = '\0';
-	printf ("%s\n", buffer);
+	//printf("buffer = [%s]\n, bytes_read = %d \n", buffer, bytes_read);
 	return (buffer);
 }
 
-char	*ft_line(char	*s, int fd) //? se usa para detectar la primera linea de texto de una cadena de caracteres
+char	*ft_string(char *save, int fd) //? cuando consiga una string con salto de linea  la devuelve
 {
-	char	*line;
+	char	*string;
+	char	*temp;
 	int		i;
 
 	i = 0;
-	line = NULL;
-	while (!salto(line)) //? es verdadero cuando no ahi salto de linea en line 
+	string = NULL;
+	if (save)
+		return (save);
+	while (!salto(string)) //? es verdadero cuando no ahi salto de linea en line 
 	{
 		//line = ft_read(fd); //? guarda el contenido de ft_read en line y no tiene que ser una linea completa
-		line = ft_strjoin (line, ft_read(fd));
+		temp = ft_read(fd);
+		if(temp[0] == '\0'){
+			return(NULL);
+		}
+		
+		if(temp == NULL)
+		{
+			return(string);	
+		}
+		//printf("2");
+		string = ft_strjoin (string, temp);
+		//printf("[%s]\n", temp);
 	}
-	if (line == NULL)
-	{
-		return (NULL);
-	}
-	return (line);
+	//printf("3");
+	return (string);
 }
 
 int	ft_saltlin(char *line)//? devuelve la posicion del salto de linea, si no hay salto de linea devuelve el nº de char que ahi
@@ -85,23 +98,39 @@ int	ft_saltlin(char *line)//? devuelve la posicion del salto de linea, si no hay
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*save;
+	static char	*save = NULL;
 
 	if (fd < 0 || BUFFER_SIZE<= 0)
 		return (0);
-	if (!save)
-		return (NULL);
-	line = ft_line (save, fd); //?devuelme una linea o mas
+	//if(save)
+	//	return save;
+	//printf("1\n");
+	line = ft_string (save, fd); //?devuelme una linea o mas
+	
+	if (line == NULL)
+		return(NULL);
+	//printf("2");
 	int i = ft_saltlin(line);
 	if(line[i] == '\n')
 	{
-		line = ft_substr(line, 0, i + 1); //? para que empiece por el char 0 le pongo 0 y lo de i + 1 es para devolver la longitud de la cadena a devolver
 		save = ft_substr(line, i + 1, ft_strlen(line + i + 1)); //? la primera parte sirve para que sepa donde empezar, la segunda es para qu eccuenta la segunda parte
+		line = ft_substr(line, 0, i + 1); //? para que empiece por el char 0 le pongo 0 y lo de i + 1 es para devolver la longitud de la cadena a devolver
 	}
-	if (line == NULL)
+	//printf("3\n");
+	if (!line)
 		return (NULL);
+		//printf("3");
 	return (line);
 }
+
+/*
+Read sirve para leer datos de un fd y los almacena en un buffer la sintaxis es mas o menos asi read(fd, buffer, BUFFER_SIZE)
+
+GNL sirve para leer linea a linea
+
+la variable estatica es una variable que mantiene su valor continuamente
+y en el caso de GNL es para que no repita la linea
+*/
 
 /*
 orden
