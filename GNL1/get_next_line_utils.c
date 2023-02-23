@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 10:22:51 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/23 13:51:42 by acuesta-         ###   ########.fr       */
+/*   Created: 2023/02/13 10:35:38 by acuesta-          #+#    #+#             */
+/*   Updated: 2023/02/13 10:54:14 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,24 @@ size_t	ft_strlen(char *str)
 	return (c);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
+	unsigned int	y1;
+	unsigned int	y2;
 	unsigned int	i;
 	unsigned int	x;
 	char			*str1;
 
 	if (s2 == 0)
 		return (NULL);
+	y1 = ft_strlen((char *)s1);
+	y2 = ft_strlen((char *)s2);
 	i = 0;
 	x = -1;
-	str1 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str1 = malloc(sizeof(char) * (y1 + y2 + 1));
 	if (!str1)
 		return (NULL);
-	while (i < ft_strlen(s1))
+	while (i < y1)
 	{
 		str1[i] = s1[i];
 		i++;
@@ -47,8 +51,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[++x])
 		str1[i++] = s2[x];
 	str1[i] = '\0';
-	if(s1)
-		free(s1);
 	return (str1);
 }
 
@@ -95,58 +97,3 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	ft_strlcpy(i, &s[start], len + 1);
 	return (i);
 }
-
- char	*ft_strdup(const char *src)
- {
- 	int		i;
- 	int		len;
- 	char	*str;
-
- 	len = 0;
- 	while (src[len])
- 		len++;
- 	str = (char *) malloc (sizeof(*str) * (len + 1));
- 	if (!str)
- 		return (NULL);
- 	i = 0;
- 	while (i < len)
- 	{
- 		str[i] = src[i];
- 		i++;
- 	}
- 	str[i] = '\0';
- 	return (str);
- }
-
-/*
-int	*ft_calloc(size_t count, size_t size)
-{
-	char	*memory;
-	size_t	i;
-
-	i = 0;
-	memory = malloc(count * size);
-	if (memory == NULL)
-		return (0);
-	while (i < count * size)
-	{
-		memory[i] = 0;
-		i++;
-	}
-	return (memory);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	char	*chr;
-
-	chr = (char *)s;
-	while (*chr != (const char)c)
-	{
-		if (!*chr)
-			return (NULL);
-		chr++;
-	}
-	return (chr);
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 11:58:41 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/07 13:36:20 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/21 12:01:46 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,18 @@ int main(void)
    }
 	char *line = get_next_line(fd);
 	printf("[%s]\n",line);
+	free(line);
 	line = get_next_line(fd);
 	printf("[%s]\n",line);
+	free(line);
 	line = get_next_line(fd);
 	printf("[%s]\n",line);
+	free(line);
 	line = get_next_line(fd);
 	printf("[%s]\n",line);
-	line = get_next_line(fd);
-	printf("[%s]\n",line);
-	line = get_next_line(fd);
-	printf("[%s]\n",line);
+	free(line);
+	
 	return(0);
 }
+
+
