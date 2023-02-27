@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:35:38 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/13 10:54:14 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:16:40 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,20 @@ size_t	ft_strlen(char *str)
 	return (c);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	unsigned int	y1;
-	unsigned int	y2;
 	unsigned int	i;
 	unsigned int	x;
 	char			*str1;
 
 	if (s2 == 0)
 		return (NULL);
-	y1 = ft_strlen((char *)s1);
-	y2 = ft_strlen((char *)s2);
 	i = 0;
 	x = -1;
-	str1 = malloc(sizeof(char) * (y1 + y2 + 1));
+	str1 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!str1)
 		return (NULL);
-	while (i < y1)
+	while (i < ft_strlen(s1))
 	{
 		str1[i] = s1[i];
 		i++;
@@ -51,6 +47,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[++x])
 		str1[i++] = s2[x];
 	str1[i] = '\0';
+	if (s1)
+		free (s1);
 	return (str1);
 }
 
@@ -76,7 +74,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 }
 
 char	*ft_substr(char *s, unsigned int start, size_t len)
-
 {
 	char	*i;
 

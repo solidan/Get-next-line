@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 10:22:43 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/23 13:52:23 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:49:16 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ char	*ft_string(char *save, int fd) //? cuando consiga una string con salto de l
 	string = NULL;
 	
 	if (save)
-	{
-		string = ft_strdup(save); // ?uso strdup para que copie la cadena save y que la almacene en string
-        free(save); // ?es necesario liberar memoria ya que lo que hacce strdup es copiar la string original y para evitar que haya fugas de memoria.
-	}
+		string = save; //? Uso strdup para que copie la cadena save y que la almacene en string
 	while (!salto(string)) //? es verdadero mientras no ahi salto de linea en la string
 	{
 		temp = ft_read(fd);
@@ -68,10 +65,11 @@ char	*ft_string(char *save, int fd) //? cuando consiga una string con salto de l
 			free (temp);
 			return (string);
 		}
-		if(temp == NULL)
-			return(string);	
+		if (temp == NULL)
+			return (string);	
 	 	lib = ft_strjoin (string, temp); 
-		//free (string);
+		if(string == NULL)
+			free (string);
 		free (temp);
 		string = lib;
 	}
@@ -98,6 +96,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*save = NULL; //? se pone estatica para que vuelva a empezar y evitar null
 	int			i;
+	char		*temp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
@@ -108,8 +107,9 @@ char	*get_next_line(int fd)
 	if (line[i] == '\n') //? Para encontrar el salto de linea
 	{
 		save = ft_substr (line, i + 1, ft_strlen(line + i + 1)); //? la primera parte sirve para que sepa donde empezar, la segunda es para qu eccuenta la segunda parte
-		line = ft_substr (line, 0, i + 1); //? para que empiece por el char 0 le pongo 0 y lo de i + 1 es para devolver la longitud de la cadena a devolver	
-	
+		temp = ft_substr (line, 0, i + 1); //? para que empiece por el char 0 le pongo 0 y lo de i + 1 es para devolver la longitud de la cadena a devolver	
+		free(line);
+		line = temp;
 	}
 	//?hacer algo para que no se repita la ultima linea y que pasa cuando no encuentra un salto de linea
     else

@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:35:35 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/17 11:00:44 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:16:10 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int		ft_saltlin(char *line);
 size_t	ft_strlen(char *str);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 
 #endif 

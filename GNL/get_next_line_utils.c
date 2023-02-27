@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 10:22:51 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/23 13:51:42 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:16:23 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,27 +96,6 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (i);
 }
 
- char	*ft_strdup(const char *src)
- {
- 	int		i;
- 	int		len;
- 	char	*str;
-
- 	len = 0;
- 	while (src[len])
- 		len++;
- 	str = (char *) malloc (sizeof(*str) * (len + 1));
- 	if (!str)
- 		return (NULL);
- 	i = 0;
- 	while (i < len)
- 	{
- 		str[i] = src[i];
- 		i++;
- 	}
- 	str[i] = '\0';
- 	return (str);
- }
 
 /*
 int	*ft_calloc(size_t count, size_t size)
