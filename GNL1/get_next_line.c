@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:37:12 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/27 13:07:35 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/02/28 13:27:09 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ char	*ft_read(int fd)
 		return (NULL);
 	bytes_read = read (fd, buffer, BUFFER_SIZE);
 	if (bytes_read < 0)
-	{
 		return (NULL);
-	}
 	buffer[bytes_read] = '\0';
 	return (buffer);
 }
@@ -52,10 +50,9 @@ char	*ft_string(char *save, int fd)
 	char	*string;
 	char	*temp;
 	char	*lib;
+	int		i;
 
-	string = NULL;
-	if (save)
-		string = save;
+	string = save;
 	while (!salto(string))
 	{
 		temp = ft_read(fd);
@@ -72,6 +69,8 @@ char	*ft_string(char *save, int fd)
 		free (temp);
 		string = lib;
 	}
+	i = ft_strlen(string);
+	string[i] = '\0';
 	return (string);
 }
 
@@ -92,12 +91,12 @@ int	ft_saltlin(char *line)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*save = NULL;
+	static char	*save;
 	int			i;
 	char		*temp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (NULL);
 	line = ft_string (save, fd);
 	if (line == NULL)
 		return (NULL);
@@ -115,3 +114,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	return (line);
 }
+
+
+
+//! expected NULL, got ""
