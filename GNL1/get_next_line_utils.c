@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:35:38 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/28 12:17:05 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:19:12 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,30 @@ size_t	ft_strlen(char *str)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
+	unsigned int	str1;
+	unsigned int	str2;
+	char			*final;
 	unsigned int	i;
-	unsigned int	x;
-	char			*str1;
 
-	if (s2 == 0)
+	str1 = ft_strlen (s1);
+	str2 = ft_strlen (s2);
+	final = malloc(sizeof(char) * (str1 + str2 + 1));
+	if (final == NULL)
 		return (NULL);
 	i = 0;
-	x = -1;
-	str1 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!str1)
-		return (NULL);
-	while (i < ft_strlen(s1))
+	while (i < str1)
 	{
-		str1[i] = s1[i];
+		final[i] = s1[i];
 		i++;
 	}
-	while (s2[++x])
-		str1[i++] = s2[x];
-	str1[i] = '\0';
-	if (s1)
-		free (s1);
-	return (str1);
+	i = 0;
+	while (i < str2)
+	{
+		final[i + str1] = s2[i];
+		i++;
+	}
+	final[str1 + str2] = '\0';
+	return (final);
 }
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
@@ -93,4 +95,31 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	}
 	ft_strlcpy(i, &s[start], len + 1);
 	return (i);
+}
+
+char	*read_line(int fd, char **save) //?se pondria doble puntero para que save se actualizara correctamente
+{
+	char	*line;
+	int		i;
+	char	*temp;
+
+	line = ft_string (*save, fd);
+	if (!line)
+		return (NULL);
+	i = ft_saltlin (line);
+	if (line[i] == '\n')
+	{
+		*save = ft_substr (line, i + 1, ft_strlen(line + i + 1));
+		temp = ft_substr (line, 0, i + 1);
+		free(line);
+		line = temp;
+	}
+	else
+		*save = NULL;
+	if (line[0] == '\0')
+	{
+		free (line);
+		return (NULL);
+	}
+	return (line);
 }

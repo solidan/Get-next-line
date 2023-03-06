@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:37:12 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/28 13:27:09 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:22:58 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ char	*ft_read(int fd)
 	bytes_read = read (fd, buffer, BUFFER_SIZE);
 	if (bytes_read < 0)
 		return (NULL);
+	if (bytes_read == 0)
+	{
+		free (buffer);
+		return (NULL);
+	}
 	buffer[bytes_read] = '\0';
 	return (buffer);
 }
@@ -50,27 +55,23 @@ char	*ft_string(char *save, int fd)
 	char	*string;
 	char	*temp;
 	char	*lib;
-	int		i;
 
 	string = save;
 	while (!salto(string))
 	{
 		temp = ft_read(fd);
+		if (temp == NULL)
+			return (string);
 		if (temp[0] == '\0')
 		{
 			free (temp);
 			return (string);
 		}
-		if (temp == NULL)
-			return (string);
 		lib = ft_strjoin (string, temp);
-		if (string == NULL)
-			free (string);
+		free (string);
 		free (temp);
 		string = lib;
 	}
-	i = ft_strlen(string);
-	string[i] = '\0';
 	return (string);
 }
 
@@ -90,31 +91,20 @@ int	ft_saltlin(char *line)
 
 char	*get_next_line(int fd)
 {
-	char		*line;
 	static char	*save;
-	int			i;
-	char		*temp;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (NULL);
-	line = ft_string (save, fd);
-	if (line == NULL)
-		return (NULL);
-	i = ft_saltlin (line);
-	if (line[i] == '\n')
 	{
-		save = ft_substr (line, i + 1, ft_strlen(line + i + 1));
-		temp = ft_substr (line, 0, i + 1);
-		free(line);
-		line = temp;
-	}
-	else
-		save = NULL;
-	if (!line)
+		if (save != NULL)
+		{
+			free(save);
+			save = NULL;
+		}
 		return (NULL);
+	}
+	line = read_line(fd, &save); //? seria &save para que apuntara a una nueva ubicacion de la memoria
+	if (!line)
+		free(save);
 	return (line);
 }
-
-
-
-//! expected NULL, got ""

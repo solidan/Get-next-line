@@ -6,7 +6,7 @@
 /*   By: acuesta- <acuesta-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 10:22:43 by acuesta-          #+#    #+#             */
-/*   Updated: 2023/02/27 12:49:16 by acuesta-         ###   ########.fr       */
+/*   Updated: 2023/03/02 11:34:34 by acuesta-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
  	}
  	return(0); //? despues de iterar la string y no encuentra salto de linea devuelve 0
  }
-
-
 
 char	*ft_read(int fd) //? lee y devuelve string
 {
@@ -113,12 +111,11 @@ char	*get_next_line(int fd)
 	}
 	//?hacer algo para que no se repita la ultima linea y que pasa cuando no encuentra un salto de linea
     else
-	{
 		save = NULL; //? Sirve para que no repita la ultima linea
-	}
-	if (!line)
+	if (line[0] == '\0') //? si la primera posicion de line es "vacio" que devuelva nulo
 	{
-	return (NULL);
+		free (line);
+		return (NULL);
 	}
 	return (line);
 }
